@@ -4,7 +4,7 @@ import Constants from 'expo-constants';
 
 // You can import from local files
 
-export default function Login1({ onEnter, onSignUp, onListAll}) {
+export default function Login1({ onEnter, onSignUp }) {
 
   const [username, setUsername] = useState('');
   const [password, setPassword] = useState('');
@@ -40,10 +40,6 @@ export default function Login1({ onEnter, onSignUp, onListAll}) {
         <TouchableOpacity onPress={() => onSignUp(true)}
           style={{marginTop: 25}}>
           <Text style={styles.botaoText}>Cadastre-se</Text></TouchableOpacity>
-
-          <TouchableOpacity onPress={() => onListAll(true)}
-          style={{marginTop: 25}}>
-          <Text style={styles.botaoText}>Consultar Usuarios</Text></TouchableOpacity>
 
     </View>
   );

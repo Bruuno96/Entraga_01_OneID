@@ -5,6 +5,9 @@ import CadastroEstagio1 from './components/CadastroEstagio1';
 import Login1 from './components/login';
 import Perfil from './components/Perfil';
 import { getUsers, setUsers, removerDado } from './util/Storage';
+
+import Listagem from './components/Listagem';
+
 // You can import from local files
 
 export default function App() {
@@ -40,6 +43,16 @@ export default function App() {
     setUser(usr);
   }
 
+  const handleRegister1 = (primeiroNome, ultimoNome, celular, email,cpf, password) => {
+    let users = [...listUser];
+    const usr = {primeiroNome, ultimoNome, celular, email,cpf, password};
+    users.push(usr);
+    setUsers(users);
+    setListUser(users);
+    setUser(usr);
+    setIsSigningUp(false);
+  }
+
   const handleRegister = (primeiroNome, ultimoNome, celular, email,cpf, password) => {
     // verifica se já existe um email igual na lista
     if (listUser.filter(e => e.email === email).length > 0) {
@@ -72,24 +85,17 @@ export default function App() {
       return (
         <Login1 onEnter={handleEnter} onSignUp={setIsSigningUp} />);
     }
+  }else if (user != null) {
+    return <Perfil user={user} onLogout={() => setUser(null)} onRegister={handleRegister1}/>
   }
-  else {
-    return <Perfil user={user} onLogout={() => setUser(null)} />
-  } 
-  
-  if(listUser != null) {
-    return <Listagem onListAll={listUser}>
-  }
-}
+// if (user == null){
 //   return (
 //     <NavigationContainer>
-//     <Stack.Navigator initialRouteName="Login" 
-//       screenOptions={{
-//         headerShown: false
-//       }}
-//     >
-//       <Stack.Screen name="CadastroEstagio1" component={CadastroEstagio1} />
-//       <Stack.Screen name="Login" component={Login1} />
-//       <Stack.Screen name="Perfil" component={Perfil} />
+//     <Stack.Navigator>
+//       <Stack.Screen name="ConsultaUsuarios" component={Listagem} />
 //     </Stack.Navigator>
 //     </NavigationContainer>
+//   );
+// }
+// }
+}

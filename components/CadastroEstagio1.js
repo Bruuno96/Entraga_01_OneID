@@ -76,7 +76,7 @@ const [password, setPassword] = useState('');
           value={password}
         />
 
-       <TouchableOpacity onPress={() => onRegister(primeiroNome, ultimoNome, celular, email,cpf, password)}><Text>Cadastrar</Text>
+       <TouchableOpacity style={{justifyContent:'center'}}onPress={() => onRegister(primeiroNome, ultimoNome, celular, email,cpf, password)}><Text style={styles.button}>Cadastrar</Text>
         </TouchableOpacity>
 
     </View>
@@ -102,4 +102,13 @@ const styles = StyleSheet.create({
     borderRadius: 3
 
   },
+    button:{
+    width:200,
+    height:30,
+    color:'white',
+    backgroundColor:'purple',
+    textAlign:'center',
+    marginTop:10,
+    borderRadius:10,
+    }
 });

@@ -1,8 +1,9 @@
-import React from 'react';
+import React , {useEffect, useState} from 'react';
 import { StyleSheet, ImageBackground, View, Image, TouchableOpacity, Text } from 'react-native';
 import PerfilButton from '../util/PerfilButton';
+import { getUsers, setUsers, removerDado } from '../util/Storage';
 
-export default function PerfilFisico({ user, onLogout }) {
+export default function PerfilFisico({ user, onLogout, onDelete, onRegister }) {
 
 const [primeiroNome, setPrimeiroNome] = useState('');
 const [ultimoNome, setUltimoNome] = useState('');
@@ -11,6 +12,17 @@ const [email, setEmail] = useState('');
 const [cpf, setCpf] = useState('');
 const [password, setPassword] = useState('');
 
+const [listUser, setListUser] = useState([]);
+
+useEffect(() => {
+    async function fetchData() {
+      const list = await getUsers();
+      if (list !== null && list.length > 0) {
+        setListUser(list);
+      }
+    }
+    fetchData();
+  }, []);
 
     return (
         <View style={styles.container}>
@@ -30,9 +42,21 @@ const [password, setPassword] = useState('');
                 <PerfilButton chave="CPF" value={user.password} onChangeText={setPassword}/>
             </View>
 
+       <View style={{flex:0.2, justifyContent:'center', alignItems:'center'}}>
+       
        <TouchableOpacity onPress={onLogout}>
           <Text style={styles.button}>Sair</Text>
         </TouchableOpacity>
+
+        <TouchableOpacity onPress={onDelete}>
+          <Text style={styles.button}>Deletar Usuario</Text>
+        </TouchableOpacity>
+
+        <TouchableOpacity
+         onPress={() => onRegister(primeiroNome, ultimoNome, celular, email,cpf, password)}><Text  style={styles.button}>Atualizar dados</Text>
+        </TouchableOpacity>
+
+       </View>
             
         </View>
         
@@ -64,6 +88,7 @@ const styles = StyleSheet.create({
     fotoPerfil: {
         height: 100,
         width: 100,
+        marginTop:20,
         marginBottom: 50,
         borderRadius: 100
     },
@@ -71,14 +96,11 @@ const styles = StyleSheet.create({
         flex: 1,
     },
     button:{
-    width: 300,
-    height: 45,
-    backgroundColor: '#78308C',
-    marginTop: 20,
-    borderRadius: 10,
-    alignItems: 'center',
-    justifyContent: 'center',
-    marginLeft:30,
-    marginBottom:40
+    width:200,
+    height:20,
+    color:'white',
+    backgroundColor:'purple',
+    textAlign:'center',
+    marginTop:10
     }
 });
